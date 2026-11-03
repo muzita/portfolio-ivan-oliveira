@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Portfólio — Ivan Oliveira</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Outfit:wght@300&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --cream: #fffdd0;
+      --green: #013630;
+      --mint: #c2e6c1;
+      --sage: #97b797;
+      --teal: #097062;
+      --orange: #e05311;
+      --grey: #727272;
+      --ph: #d9e4d4;
+      --tabH: 0px;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px)
+    }
+
+    @media (prefers-color-scheme:dark) {
+      :root:not([data-theme="light"]) {
+        --cream: #fffdd0;
+        --green: #013630;
+        --mint: #c2e6c1;
+        --sage: #97b797
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --cream: #fffdd0;
+      --green: #013630;
+      --mint: #c2e6c1;
+      --sage: #97b797
+    }
+
+    html {
+      scroll-padding-top: env(safe-area-inset-top, 0px)
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0
+    }
+
+    body {
+      background: var(--cream);
+      font-family: "Lufga", "Outfit", system-ui, sans-serif;
+      font-weight: 300;
+      overflow-x: clip
+    }
+
+    .serif {
+      font-family: "Instrument Serif", Georgia, serif;
+      font-style: italic;
+      font-weight: 400
+    }
+
+    main {
+      padding-top: var(--tabH)
+    }
+
+    /* pasta */
+    .pn {
+      position: sticky;
+      top: var(--tabH);
+      height: calc(100svh - var(--tabH));
+      z-index: var(--z)
+    }
+
+    .burger {
+      position: fixed;
+      top: calc(14px + env(safe-area-inset-top, 0px));
+      right: max(14px, 2.5vw);
+      z-index: 1000;
+      width: 52px;
+      height: 52px;
+      border: 0;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 2px var(--cream);
+      cursor: pointer;
+      display: grid;
+      place-content: center;
+      gap: 7px
+    }
+
+    .burger i {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--cream);
+      transition: transform .3s
+    }
+
+    .open .burger i:first-child {
+      transform: translateY(4.5px) rotate(45deg)
+    }
+
+    .open .burger i:last-child {
+      transform: translateY(-4.5px) rotate(-45deg)
+    }
+
+    .burger:focus-visible,
+    .menu a:focus-visible {
+      outline: 3px solid var(--mint);
+      outline-offset: 3px
+    }
+
+    .menu {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: var(--green);
+      color: var(--cream);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: env(safe-area-inset-top, 0px) 8vw 0;
+      overflow: auto;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .3s, visibility .3s
+    }
+
+    .open .menu {
+      opacity: 1;
+      visibility: visible
+    }
+
+    .menu a {
+      font-size: clamp(40px, 7vw, 110px);
+      line-height: 1.05;
+      color: inherit;
+      text-decoration: none;
+      display: block;
+      width: max-content;
+      max-width: 100%
+    }
+
+    .menu a:hover {
+      color: var(--mint)
+    }
+
+    .menu a.s {
+      font-size: clamp(20px, 2.4vw, 40px);
+      margin-left: 1.2em;
+      color: var(--mint)
+    }
+
+    .menu a.s:hover {
+      color: var(--cream)
+    }
+
+    .body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--fg);
+      border-radius: 22px 22px 0 0;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: 1.5vw;
+      align-items: center;
+      padding: 0 4.3vw;
+      transform-origin: 50% 0;
+      transform: translateY(calc(var(--p, 0) * -4vh)) scale(calc(1 - var(--p, 0) * .05));
+      filter: brightness(calc(1 - var(--p, 0) * .3))
+    }
+
+    .dark {
+      --bg: var(--green);
+      --fg: var(--cream);
+      --tc: var(--mint)
+    }
+
+    .mint {
+      --bg: var(--mint);
+      --fg: var(--green);
+      --tc: var(--green)
+    }
+
+    .sage {
+      --bg: var(--sage);
+      --fg: var(--green);
+      --tc: var(--green)
+    }
+
+    h1,
+    h2 {
+      font-size: clamp(40px, 5vw, 96px);
+      line-height: 1.05;
+      margin-bottom: .3em
+    }
+
+    .txt {
+      grid-column: 1/6;
+      transform: translateY(calc(var(--q, 0) * 22vh))
+    }
+
+    .txt p {
+      font-size: clamp(14px, 1.15vw, 22px);
+      line-height: 1.28;
+      margin-bottom: 1em;
+      max-width: 32em
+    }
+
+    .cover h1 {
+      grid-column: 1/-1;
+      font-size: clamp(72px, 13vw, 250px);
+      text-align: right;
+      line-height: .95;
+      margin: 0;
+      transform: translateY(calc(var(--q, 0) * 30vh))
+    }
+
+    .cover .name {
+      grid-column: 1/-1;
+      text-align: right;
+      font-size: clamp(26px, 3.3vw, 64px)
+    }
+
+    .cover .body {
+      align-content: end;
+      padding-bottom: 3.5vw
+    }
+
+    .serv {
+      grid-column: 9/-1;
+      text-align: right;
+      font-size: clamp(14px, 1.25vw, 24px);
+      line-height: 1.3;
+      transform: translateY(calc(var(--q, 0) * 35vh))
+    }
+
+    .serv b {
+      display: block;
+      font-size: clamp(19px, 1.8vw, 34px);
+      margin-top: 1em;
+      font-weight: 400
+    }
+
+    .serv b:first-child {
+      margin-top: 0
+    }
+
+    .logos {
+      grid-column: 7/-1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3.2% 3.4%;
+      transform: translateY(calc(var(--q, 0) * 40vh))
+    }
+
+    .logos i {
+      aspect-ratio: 286/144;
+      border-radius: 6px;
+      overflow: hidden;
+      display: grid;
+      place-items: center
+    }
+
+    .tiles,
+    .phones {
+      grid-column: 7/-1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3.2%;
+      align-items: start
+    }
+
+    .col {
+      --sp: 40;
+      transform: translateY(calc((var(--q, 0) - var(--p, 0) * .25) * var(--sp) * 1vh))
+    }
+
+    .col:nth-child(2) {
+      --sp: 75
+    }
+
+    .col:nth-child(3) {
+      --sp: 110
+    }
+
+    .t {
+      aspect-ratio: 296.667/371.667;
+      border-radius: 10.4%/8.3%;
+      background: var(--ph);
+      overflow: hidden
+    }
+
+    .t+.t {
+      margin-top: 7.4%
+    }
+
+    .col:nth-child(1) .t:first-child {
+      margin-top: 15.8%
+    }
+
+    .col:nth-child(3) .t:first-child {
+      margin-top: 18.9%
+    }
+
+    .phones {
+      grid-column: 6/-1;
+      gap: 6%
+    }
+
+    .ph {
+      aspect-ratio: 356/615;
+      border-radius: 10.4%/6%;
+      background: #2a4a45;
+      overflow: hidden
+    }
+
+    .ph:nth-child(2) {
+      background: #131313
+    }
+
+    .ph.col:nth-child(odd) {
+      margin-top: 14%
+    }
+
+    .m {
+      display: inline
+    }
+
+    .t img,
+    .ph img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block
+    }
+
+    .web {
+      grid-column: 6/-1;
+      display: flex;
+      align-items: center
+    }
+
+    .w1 {
+      --sp: 40;
+      flex: 0 0 74%
+    }
+
+    .w2 {
+      --sp: 90;
+      flex: 0 0 25.4%;
+      margin-left: -15%;
+      z-index: 2
+    }
+
+    .web img {
+      width: 100%;
+      height: auto;
+      max-height: 82svh;
+      object-fit: contain;
+      display: block
+    }
+
+    .logos img {
+      max-width: 70%;
+      max-height: 70%;
+      object-fit: contain
+    }
+
+    @media (max-width:820px) {
+      .burger {
+        width: 46px;
+        height: 46px
+      }
+
+      .menu a.s {
+        margin-left: .8em
+      }
+
+      .body {
+        display: block;
+        padding: 11vh 6vw 0
+      }
+
+      .txt {
+        margin-bottom: 3vh;
+        transform: none
+      }
+
+      .txt p {
+        font-size: clamp(12px, 1.9svh, 14px);
+        line-height: 1.25;
+        margin-bottom: .7em
+      }
+
+      h2 {
+        font-size: clamp(30px, 5svh, 38px)
+      }
+
+      .cover .body {
+        display: grid;
+        align-content: end;
+        padding: 0 6vw 6vh
+      }
+
+      .col {
+        --sp: 18 !important
+      }
+
+      .serv {
+        margin-top: 2vh;
+        transform: none;
+        text-align: left;
+        font-size: clamp(11px, 1.7svh, 13px)
+      }
+
+      .serv b {
+        margin-top: .6em;
+        font-size: 18px
+      }
+
+      .tiles {
+        gap: 2.5%
+      }
+
+      .t+.t {
+        margin-top: 5%
+      }
+
+      .phones .ph {
+        margin-top: 0 !important
+      }
+
+      .logos,
+      .tiles,
+      .phones {
+        transform: none
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      .pn * {
+        transform: none !important
+      }
+
+      .body {
+        filter: none !important
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main id="m"></main>
+  <script>
+    (function () {
+      var H = function (s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML };
+      var F = [
+        { t: '(cover)', c: 'dark', p: [{ k: 'cover' }, { k: 'about' }] },
+        { t: '(logos)', c: 'mint', p: [{ k: 'logos' }] },
+        {
+          t: '(branding)', c: 'sage', p: [
+            ['Geolux', 'Identidade e conceito criados para a GEOLUX, uma empresa emblemática e com experiência reconhecida na área das energias renováveis.', 'O conceito assenta numa geometria precisa que interpreta a força da broca e a solidez do território, integrado numa paleta de cores — o laranja vibrante e o cinza profundo — que evoca a energia do sol e a estabilidade das infraestruturas.', ['', '#e05311', '', '#fff', '#727272', '']],
+            ['ADVNCE', 'Identidade e conceitos criados para a ADVNCE, centro de dança de Vila Nova de Cerveira.', 'A proposta reflete o dinamismo, a precisão e a fluidez da arte do movimento através de uma linguagem visual contemporânea e expressiva. Inspirado na evolução, no ritmo e na energia dos bailarinos, o espaço e a marca combinam a elegância da dança com a força de uma comunidade artística vibrante no Alto Minho.'],
+            ['Óptica Viatodos', 'Identidade visual criada para a Óptica Viatodos, uma marca focada na saúde visual, precisão e estilo contemporâneo.', 'A proposta traduz o equilíbrio entre clareza, inovação e sofisticação por meio de um sistema visual inspirado no conceito de visão e geometria, tipografia elegante e uma paleta cuidadosamente construída para garantir consistência em todas as aplicações da marca.'],
+            ['Bárbara Macedo Investment', 'A Bárbara Macedo Investment é uma empresa especializada em consultoria financeira e gestão de carteiras, dedicada a apoiar investidores na construção de estratégias sólidas, personalizadas e sustentáveis.', 'Com uma abordagem independente, transparente e centrada no cliente, oferecem soluções que equilibram prudência e rentabilidade, promovendo decisões informadas e seguras.'],
+            ['Ferro Cávado', 'A Ferrocávado, localizada em Palmeira, Braga, dedica-se a atividades metalúrgicas de base, especialmente ao corte e quinagem de chapas de ferro e outros produtos metálicos.', 'A equipa técnica, composta por profissionais especializados em operações de corte industrial e dobragem, utiliza equipamentos adequados ao fabrico de peças metálicas complexas, garantindo rigor e eficiência.']
+          ]
+        },
+        {
+          t: '(social <span class="m">media</span>))', c: 'dark', l: 'phones', p: [
+            ['Sandra Oliveira Colour Studio', 'Para o Sandra Oliveira Colour Studio, desenvolveu-se uma linha de comunicação visual para redes sociais pautada pelo requinte, harmonia e sofisticação.', 'Com uma paleta de tons neutros, tipografias elegantes e uma estrutura visual limpa, foram criadas peças digitais que comunicam promoções, dicas de especialistas, prova social e convites ao agendamento de forma fluida e envolvente.'],
+            ['Echo Sound', 'Criação de conteúdos vibrantes e dinâmicos para as redes sociais da dupla ECHO SOUND.', 'A comunicação visual foi estruturada para transpor a energia contagiante da dupla para o ambiente digital, utilizando tipografia arrojada, cores eletrizantes e composições que capturam a essência das suas apresentações ao vivo.'],
+            ['LA2Culture', 'Comunicar a identidade de um projeto exige consistência, clareza e adaptabilidade aos meios digitais. Para a LA2Culture, foi concebida a própria presença nas redes sociais com a mesma dedicação com que abordam cada espaço cultural ou projeto de património.Identidade visual criada para a Óptica Viatodos, uma marca focada na saúde visual, precisão e estilo contemporâneo.', 'Das soluções de áudio e vídeo à valorização do território, passando por aplicações móveis e guias digitais de peregrinação, a comunicação traduz o propósito: colocar a tecnologia ao serviço da cultura, do património e da identidade.'],
+          ]
+        },
+        {
+          t: '(web)', c: 'mint', l: 'web', p: [
+            ['XpeCAM', 'Interface desenvolvida em parceria com a LA2Culture para a landing page da XpeCAM, uma plataforma focada na interseção entre ciência do património e inteligência artificial.', 'O conteúdo foi estruturado para apresentar tecnologia de ponta de forma clara e intuitiva, facilitando a navegação e transmitindo rigor científico e credibilidade através de um design limpo, moderno e visualmente consistente.', ['', '#e05311', '', '#fff', '#727272', '']],
+            ['Caminhos de São Bento', 'Interface desenvolvida em parceria com a LA2Culture para o Guia Digital dos Caminhos de São Bento da Porta Aberta.', 'A aplicação foi criada para orientar e enriquecer a jornada dos peregrinos e visitantes de forma clara e intuitiva, facilitando o acesso a mapas, pontos de interesse e informação histórica, transmitindo segurança e proximidade através de um design funcional e visualmente acolhedor.'],
+            ['Bell Challenge', 'Website desenvolvido em parceria com a LA2Culture para o Bell Challenge, localizado na Igreja do Castelo de São Jorge, em Lisboa.', 'O website foi criado para proporcionar uma experiência dinâmica e envolvente aos visitantes, combinando elementos de gamificação com o património histórico dos sinos, garantindo uma navegação intuitiva e transmitindo inovação e cultura através de um design moderno e apelativo.'],
+            ['Santuário Bom Jesus do Monte', 'Interface desenvolvida em parceria com a LA2Culture para o Guia Digital do Santuário do Bom Jesus do Monte, em Braga.', 'O guia foi criado para valorizar a riqueza patrimonial e espiritual deste monumento Património Mundial da UNESCO, organizando o conteúdo de forma clara, facilitando a navegação pelos seus escadórios e jardins e transmitindo credibilidade e encanto por meio de uma comunicação visual elegante e acessível.'],
+            ['Quiz Interativo', 'Quiz interativo concebido para proporcionar uma experiência de utilizador envolvente e educativa. ', 'Esta aplicação destaca-se pela sua interface moderna e intuitiva, garantindo uma navegação fácil e agradável. Ideal para todas as idades, a aplicação oferece uma forma divertida e eficaz de testar e expandir conhecimentos, tornando-se uma ferramenta indispensável tanto para o entretenimento quanto para a educação.'],
+            ['Igreja da Torre do Castelo', 'Interface desenvolvida em parceria com a LA2Culture para a Igreja da Torre do Castelo, em Lisboa.', 'A aplicação explora eventos marcantes, como o Terramoto de 1755, figuras históricas e elementos do património religioso através de uma navegação fluida, visual e acessível em múltiplos idiomas.'],
+            ['Loja de Turismo de Amares', 'Interface desenvolvida em parceria com a LA2Culture para o município de Amares.', 'A interface traduz o mapa da região numa plataforma interativa, permitindo aos visitantes explorar pontos de interesse, como monumentos e igrejas históricas, acompanhados por detalhes informativos, galeria fotográfica e códigos QR para consulta em dispositivos móveis.'],
+            ['Igreja da Graça', 'Interface desenvolvida em parceria com a LA2Culture para a Igreja da Graça, em Lisboa.', 'Com um design sóbrio e elegante e uma galeria visual imersiva, a interface permite ao visitante navegar pelos diferentes espaços do santuário e saber mais sobre a sua história.'],
+            ['Santuário de Nª Sra. da Abadia', 'Interface desenvolvida em parceria com a LA2Culture para o Santuário da Nossa Senhora da Abadia, em Amares.', 'Através de uma galeria visual imersiva, o visitante pode navegar pelos diferentes espaços do santuário — desde o Exterior e a Capela-Mor ao Arco Cruzeiro e Nave —, descobrindo a beleza dos detalhes ornamentais através de uma interface minimalista.'],
+            ['Quem é o Homem do Sudário?', 'Interface desenvolvida em parceria com a LA2Culture para a exposição “Quem é o Homem do Sudário”, em Lisboa.', 'O ecrã interativo combina texto documental, investigações históricas e fotográficas com o mapeamento anatómico da peça, permitindo ao utilizador explorar secções específicas e compreender a cronologia dos estudos científicos.'],
+
+          ]
+        },
+        { t: '(contact)', c: 'sage', p: [{ k: 'contact' }] }
+      ];
+      var DEF = ['', '#fff', '#097062', '#fff', '#727272', ''];
+      /* IMAGENS: IMG['Geolux']=[c1topo,c1baixo,c2topo,c2baixo,c3topo,c3baixo]; IMG.logos=[12 logos]; IMG.social=[3 stories] (data:URI) */
+      var IMG = {}; var CONTACT = [];
+      function slug(s) { return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') }
+      function auto(n, d) { var a = []; for (var i = 1; i <= n; i++) a.push('img/' + d + '/' + i + '.jpg'); return a } /* ex.: CONTACT=['email@dominio.pt','+351 000 000 000'] */
+      window.__fb = function (i) { var e = ['jpg', 'png', 'webp'], m = i.src.match(/\.(jpg|png|webp)$/i), n = m ? e.indexOf(m[1].toLowerCase()) : -1; if (n >= 0 && n < e.length - 1) i.src = i.src.replace(/\.\w+$/, '.' + e[n + 1]); else i.remove() };
+      function im(s) { return s ? '<img src="' + s + '" alt="" loading="lazy" onerror="__fb(this)">' : '' }
+      function phones(g) { var h = '<div class="phones">'; for (var i = 0; i < 3; i++) h += '<div class="ph col">' + im(g[i]) + '</div>'; return h + '</div>' }
+      function web(g) { return '<div class="web"><div class="col w1">' + im(g[0]) + '</div><div class="col w2">' + im(g[1]) + '</div></div>' }
+      function cols(a, g) { g = g || []; var h = '<div class="tiles">'; for (var c = 0; c < 3; c++) { h += '<div class="col">'; for (var r = 0; r < 2; r++) { var v = a[c * 2 + r]; h += '<div class="t"' + (v ? ' style="background:' + v + '"' : '') + '>' + im(g[c * 2 + r]) + '</div>' } h += '</div>' } return h + '</div>' }
+      function txt(h, a, b) { return '<div class="txt"><h2 class="serif">' + H(h) + '</h2><p>' + H(a) + '</p>' + (b ? '<p>' + H(b) + '</p>' : '') + '</div>' }
+      function body(p, l) {
+        if (p.k === 'cover') return '<h1 class="serif">Portfólio</h1><p class="name serif">Ivan Oliveira</p>';
+        if (p.k === 'about') return txt('Ivan Oliveira', 'Acredito que um bom design nasce da compreensão do negócio. Por isso, cada projeto é pensado para transformar estratégia em soluções visuais consistentes, capazes de fortalecer marcas, organizar a comunicação e posicionar empresas com mais clareza, relevância e consistência.', 'Atuo de forma consultiva, conduzindo projetos do briefing à implementação e unindo visão estratégica, direção criativa e excelência técnica para desenvolver identidades visuais, campanhas, materiais editoriais, interfaces digitais e soluções de comunicação visual.') + '<div class="serv"><b class="serif">Branding</b>Identidade Visual<br>Sistemas Visuais<br>Direção de Arte<b class="serif">Comunicação Visual</b>Redes Sociais<br>Materiais de Marketing<br>Apresentações<b class="serif">Web &amp; Digital</b>Landing Pages<br>Websites<br>Design de Interfaces</div>';
+        if (p.k === 'logos') return txt('Logofólio', 'Seleção de marcas desenvolvidas para empresas de diferentes segmentos.', 'Cada projeto parte da compreensão do negócio, do posicionamento e do público da marca. O objetivo vai além da criação de um símbolo: construir identidades memoráveis, versáteis e preparadas para diferentes aplicações.') + '<div class="logos">' + [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(function (n) { return '<i>' + im((IMG.logos || auto(12, 'logos'))[n]) + '</i>' }).join('') + '</div>';
+        if (p.k === 'contact') return txt('Obrigado!', 'Mais informações?', 'ivanoliveirageral@gmail.com');
+        var o = txt(p[0], p[1], p[2]), sl = slug(p[0]);
+        if (l === 'phones') return o + phones(IMG[p[0]] || auto(3, sl));
+        if (l === 'web') return o + web(IMG[p[0]] || auto(2, sl));
+        return o + cols(p[3] || DEF, IMG[p[0]] || auto(6, sl));
+      }
+      var m = document.getElementById('m'), z = 1, h = '';
+      var nav = '', k = 0;
+      F.forEach(function (f, i) {
+        nav += '<a href="#" class="serif" data-k="' + k + '">' + f.t.replace(/<[^>]*>|[()]/g, '') + '</a>'; f.p.forEach(function (p) {
+          h += '<section class="pn ' + f.c + (p.k === 'cover' ? ' cover' : '') + '" style="--i:' + i + ';--z:' + (z++) + '"><div class="body">' + body(p, f.l) + '</div></section>'; k++;
+        })
+      });
+      m.innerHTML = h;
+      var b = document.createElement('button'); b.className = 'burger'; b.setAttribute('aria-label', 'Abrir menu'); b.setAttribute('aria-expanded', 'false'); b.innerHTML = '<i></i><i></i>';
+      var mn = document.createElement('nav'); mn.className = 'menu'; mn.setAttribute('aria-label', 'Navegação'); mn.innerHTML = nav;
+      document.body.appendChild(mn); document.body.appendChild(b);
+      var root = document.documentElement;
+      function tog(o) { root.classList.toggle('open', o); b.setAttribute('aria-expanded', o); b.setAttribute('aria-label', o ? 'Fechar menu' : 'Abrir menu') }
+      b.onclick = function () { tog(!root.classList.contains('open')) };
+      addEventListener('keydown', function (e) { if (e.key === 'Escape') tog(false) });
+      mn.onclick = function (e) { var a = e.target.closest('a'); if (!a) return; e.preventDefault(); tog(false); scrollTo({ top: a.dataset.k * m.children[0].offsetHeight, behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth' }) };
+      var pn = [].slice.call(m.children);
+      if (matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+      var tk = false;
+      function cl(x) { return x < 0 ? 0 : x > 1 ? 1 : x }
+      function upd() {
+        tk = false; var vh = innerHeight, tH = parseFloat(getComputedStyle(pn[0]).top) || 0, span = vh - tH;
+        pn.forEach(function (p, k) {
+          var q = cl((p.getBoundingClientRect().top - tH) / span), n = pn[k + 1], t = n ? cl((vh - n.getBoundingClientRect().top) / span) : 0;
+          p.style.setProperty('--q', q.toFixed(3)); p.style.setProperty('--p', t.toFixed(3))
+        })
+      }
+      function req() { if (!tk) { tk = true; requestAnimationFrame(upd) } }
+      addEventListener('scroll', req, { passive: true }); addEventListener('resize', req); upd();
+    })();
+  </script>
+</body>
+
+</html>
